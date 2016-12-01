@@ -3,18 +3,21 @@ package application.view;
 import application.MainApp;
 import application.model.Item;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class ItemOverviewController {
 	@FXML private TableView<Item> itemTable;
-    @FXML private TableColumn<Item, String> NoColumn;
+    @FXML private TableColumn<Item, String> NumberColumn;
     @FXML private TableColumn<Item, String> DescrColumn;
     
-    @FXML private Label noLbl;
+    @FXML private Label numberLbl;
     @FXML private Label DescrLbl;
     @FXML private Label Descr2Lbl;
+    @FXML private Label salespriceLbl;
 
     private MainApp mainApp;
 
@@ -23,7 +26,7 @@ public class ItemOverviewController {
 
     @FXML
     private void initialize() {
-        NoColumn.setCellValueFactory(cellData -> cellData.getValue().getNumberProperty());
+        NumberColumn.setCellValueFactory(cellData -> cellData.getValue().getNumberProperty());
         DescrColumn.setCellValueFactory(cellData -> cellData.getValue().getDescriptionProperty());
        
         // Clear item details.
@@ -37,14 +40,16 @@ public class ItemOverviewController {
     private void showItemDetails(Item item) {
         if (item != null) {
             // Fill the labels with info from the item object.
-            noLbl.setText(item.getNumber());
+            numberLbl.setText(item.getNumber());
             DescrLbl.setText(item.getDescription());
-            Descr2Lbl.setText(item.getDescription());
+            Descr2Lbl.setText(item.getDescription2());
+            salespriceLbl.setText(item.getSalesprice().toString());
         } else {
             // Person is null, remove all the text.
-        	noLbl.setText("");
+        	numberLbl.setText("");
         	DescrLbl.setText("");
         	Descr2Lbl.setText("");
+        	salespriceLbl.setText("");
         }
     }
 
@@ -52,5 +57,52 @@ public class ItemOverviewController {
         this.mainApp = mainApp;
 
         itemTable.setItems(mainApp.getItemData());
+    }
+    
+    @FXML
+    private void handleDeleteItem() {
+        int selectedIndex = itemTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            itemTable.getItems().remove(selectedIndex);
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(mainApp.getPrimaryStage());
+            alert.setTitle("Keine Auswahl");
+            alert.setHeaderText("Kein Artikel ausgewählt!");
+            alert.setContentText("Bitte Artikel in der Tabelle auswählen.");
+
+            alert.showAndWait();
+        }
+    }
+    
+    @FXML
+    private void handleNewItem() {
+        Item tmpItem = new Item();
+        boolean okClicked = mainApp.showItemEditDialog(tmpItem);
+        if (okClicked) {
+            mainApp.getItemData().add(tmpItem);
+        }
+    }
+
+    @FXML
+    private void handleEditItem() {
+        Item selectedItem = itemTable.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            boolean okClicked = mainApp.showItemEditDialog(selectedItem);
+            if (okClicked) {
+                showItemDetails(selectedItem);
+            }
+
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(mainApp.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Person Selected");
+            alert.setContentText("Please select a person in the table.");
+
+            alert.showAndWait();
+        }
     }
 }

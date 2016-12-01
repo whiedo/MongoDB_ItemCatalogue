@@ -12,18 +12,20 @@ public class Item {
 
 	private StringProperty number;
 	private StringProperty description;
+	private StringProperty description2;
 	private DoubleProperty salesprice;
 
 	public Item() {
-        this(null, null, 0);
+        this(null, null, null, 0);
     }
 
-    public Item(String number, String description, double salesprice) {
+    public Item(String number, String description, String description2, double salesprice) {
         this.number = new SimpleStringProperty(number);
-        this.description = new SimpleStringProperty(description);  
+        this.description = new SimpleStringProperty(description);
+        this.description2 = new SimpleStringProperty(description2);  
         this.salesprice = new SimpleDoubleProperty(salesprice);
     }
-
+    
 	public StringProperty getNumberProperty() {
 		return number;
 	}
@@ -32,28 +34,40 @@ public class Item {
         return number.get();
     }
     
-	public void setNumberProperty(StringProperty number) {
-		this.number = number;
+	public void setNumber(String number) {
+		this.number.set(number);
 	}
 
 	public StringProperty getDescriptionProperty() {
 		return description;
 	}
 	
-	public void setDescriptionProperty(StringProperty description) {
-		this.description = description;
+	public void setDescription(String description) {
+		this.description.set(description);
 	}
 	
     public String getDescription() {
         return description.get();
+    }
+    
+	public StringProperty getDescriptionProperty2() {
+		return description2;
+	}
+	
+	public void setDescription2(String description2) {
+		this.description2.set(description2);
+	}
+	
+    public String getDescription2() {
+        return description2.get();
     }
 
 	public DoubleProperty getSalespriceProperty() {
 		return salesprice;
 	}
 
-	public void setSalespriceProperty(DoubleProperty salesprice) {
-		this.salesprice = salesprice;
+	public void setSalesprice(Double salesprice) {
+		this.salesprice.set(salesprice);
 	}
     
     public Double getSalesprice() {
