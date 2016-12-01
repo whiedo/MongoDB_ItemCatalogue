@@ -18,6 +18,8 @@ public class Main extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		//Test
+		//lol
 	}
 	
 	public static void main(String[] args) {
