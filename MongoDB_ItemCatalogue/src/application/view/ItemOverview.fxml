@@ -52,7 +52,7 @@
                         <Label text="Beschreibung 2" GridPane.rowIndex="2" />
                         <Label fx:id="noLbl" text="Label" GridPane.columnIndex="1" />
                         <Label fx:id="DescrLbl" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="Descr2Lbl" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                   <ButtonBar layoutX="559.0" layoutY="744.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">

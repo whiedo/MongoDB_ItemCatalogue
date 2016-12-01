@@ -24,27 +24,39 @@ public class Item {
         this.salesprice = new SimpleDoubleProperty(salesprice);
     }
 
-	public StringProperty getNumber() {
+	public StringProperty getNumberProperty() {
 		return number;
 	}
-
-	public StringProperty getDescription() {
-		return description;
-	}
-
-	public DoubleProperty getSalesprice() {
-		return salesprice;
-	}
-
-	public void setNumber(StringProperty number) {
+	
+    public String getNumber() {
+        return number.get();
+    }
+    
+	public void setNumberProperty(StringProperty number) {
 		this.number = number;
 	}
 
-	public void setDescription(StringProperty description) {
+	public StringProperty getDescriptionProperty() {
+		return description;
+	}
+	
+	public void setDescriptionProperty(StringProperty description) {
 		this.description = description;
 	}
+	
+    public String getDescription() {
+        return description.get();
+    }
 
-	public void setSalesprice(DoubleProperty salesprice) {
+	public DoubleProperty getSalespriceProperty() {
+		return salesprice;
+	}
+
+	public void setSalespriceProperty(DoubleProperty salesprice) {
 		this.salesprice = salesprice;
 	}
+    
+    public Double getSalesprice() {
+    	return salesprice.get();
+    }
 }

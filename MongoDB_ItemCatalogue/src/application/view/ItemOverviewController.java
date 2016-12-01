@@ -14,6 +14,7 @@ public class ItemOverviewController {
     
     @FXML private Label noLbl;
     @FXML private Label DescrLbl;
+    @FXML private Label Descr2Lbl;
 
     private MainApp mainApp;
 
@@ -22,8 +23,29 @@ public class ItemOverviewController {
 
     @FXML
     private void initialize() {
-        NoColumn.setCellValueFactory(cellData -> cellData.getValue().getNumber());
-        DescrColumn.setCellValueFactory(cellData -> cellData.getValue().getDescription());
+        NoColumn.setCellValueFactory(cellData -> cellData.getValue().getNumberProperty());
+        DescrColumn.setCellValueFactory(cellData -> cellData.getValue().getDescriptionProperty());
+       
+        // Clear item details.
+        showItemDetails(null);
+
+        // Listen for selection changes and show the item details when changed.
+        itemTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> showItemDetails(newValue));
+    }
+    
+    private void showItemDetails(Item item) {
+        if (item != null) {
+            // Fill the labels with info from the item object.
+            noLbl.setText(item.getNumber());
+            DescrLbl.setText(item.getDescription());
+            Descr2Lbl.setText(item.getDescription());
+        } else {
+            // Person is null, remove all the text.
+        	noLbl.setText("");
+        	DescrLbl.setText("");
+        	Descr2Lbl.setText("");
+        }
     }
 
     public void setMainApp(MainApp mainApp) {
