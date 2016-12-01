@@ -1,4 +1,4 @@
-package application.model;
+package application.mongoDBInterface.ReferenceClass;
 
 import com.mongodb.BasicDBObject;
 

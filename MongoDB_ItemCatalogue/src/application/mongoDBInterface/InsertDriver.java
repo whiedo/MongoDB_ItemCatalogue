@@ -6,6 +6,9 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import application.model.*;
+import application.mongoDBInterface.ReferenceClass.Item;
+import application.mongoDBInterface.ReferenceClass.Vendor;
+
 import java.util.ArrayList;
 
 
