@@ -9,6 +9,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import application.model.*;
@@ -30,8 +31,9 @@ public class MainApp extends Application {
             borderPane = (BorderPane) loader.load();
 			
             Scene scene = new Scene(borderPane);
+			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+            primaryStage.getIcons().add(new Image("file:resources/images/item.png"));
             
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setTitle("Artikel Katalog");
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -59,6 +61,7 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/ItemOverview.fxml"));
             AnchorPane itemOverview = (AnchorPane) loader.load();
+            
             // Set item overview into the center of root layout.
             borderPane.setCenter(itemOverview);
             
@@ -94,6 +97,7 @@ public class MainApp extends Application {
 	        dialogStage.setTitle("Artikel bearbeiten");
 	        dialogStage.initModality(Modality.WINDOW_MODAL);
 	        dialogStage.initOwner(primaryStage);
+	        dialogStage.getIcons().add(new Image("file:resources/images/item.png"));
 	        Scene scene = new Scene(page);
 	        dialogStage.setScene(scene);
 
