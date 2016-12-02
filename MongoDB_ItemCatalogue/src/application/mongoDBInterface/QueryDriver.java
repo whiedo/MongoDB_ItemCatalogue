@@ -10,8 +10,8 @@ public class QueryDriver {
 	
 	public static String makeFirstQuery() {
 		str1 = "";
-		InsertDriver.initDatabase(); 
-		FindIterable<Document> iterable = InsertDriver.database.getCollection("item").find();
+		DatabaseManager.initDatabase(); 
+		FindIterable<Document> iterable = DatabaseManager.database.getCollection("item").find();
 		
 		iterable.forEach(new Block<Document>() {
 		    @Override

@@ -1,6 +1,8 @@
 package application;
 	
 import java.io.IOException;
+import java.net.UnknownHostException;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,13 +15,14 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import application.model.*;
+import application.mongoDBInterface.ReferenceClass.ItemHelper;
 import application.view.ItemEditDialogController;
 import application.view.ItemOverviewController;
 public class MainApp extends Application {
 	
 	private Stage primaryStage;
 	private BorderPane borderPane;
-	private ObservableList<Item> itemData = FXCollections.observableArrayList();
+	private ObservableList<Item> itemData;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -37,16 +40,8 @@ public class MainApp extends Application {
 			primaryStage.setTitle("Artikel Katalog");
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			
-	        itemData.add(new Item("Hans", "Muster","Muster", 0));
-	        itemData.add(new Item("Ruth", "Mueller","Muster", 2));
-	        itemData.add(new Item("Heinz", "Kurz","Muster", 2));
-	        itemData.add(new Item("Cornelia", "Meier","Muster", 2));
-	        itemData.add(new Item("Werner", "Meyer","Muster", 2));
-	        itemData.add(new Item("Lydia", "Kunz","Muster", 2));
-	        itemData.add(new Item("Anna", "Best","Muster", 2));
-	        itemData.add(new Item("Stefan", "Meier","Muster", 2));
-	        itemData.add(new Item("Martin", "Mueller","Muster", 2));
+						
+			itemData = ItemHelper.getItems();
 			
 			showItemOverview();
 			
@@ -77,6 +72,7 @@ public class MainApp extends Application {
     }
 	
 	public static void main(String[] args) {
+		application.mongoDBInterface.DatabaseManager.initDatabase();
 		launch(args);
 	}
 
