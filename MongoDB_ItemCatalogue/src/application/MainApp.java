@@ -18,12 +18,14 @@ import application.model.*;
 import application.mongoDBInterface.ReferenceClass.ItemHelper;
 import application.view.ItemEditDialogController;
 import application.view.ItemOverviewController;
+import application.view.ProductGroupEditDialogController;
+import application.view.ProductGroupOverviewController;
 import application.view.RootLayoutController;
+
 public class MainApp extends Application {
 	
 	private Stage primaryStage;
 	private BorderPane borderPane;
-	private ObservableList<Item> itemData;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -58,8 +60,6 @@ public class MainApp extends Application {
 
 	public void showItemOverview() {
         try {
-        	itemData = ItemHelper.getItems();
-        	
             // Load item overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/ItemOverview.fxml"));
@@ -75,10 +75,24 @@ public class MainApp extends Application {
 			e.printStackTrace();
 		}
 	}
-    
-    public ObservableList<Item> getItemData() {
-        return itemData;
-    }
+	
+	public void showProductGroupOverview() {
+        try {
+            // Load item overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/ProductGroupOverview.fxml"));
+            AnchorPane productGroupOverview = (AnchorPane) loader.load();
+            productGroupOverview.getStylesheets().add(STYLESHEET_CASPIAN);
+            
+            // Set item overview into the center of root layout.
+            borderPane.setCenter(productGroupOverview);
+            
+            ProductGroupOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public static void main(String[] args) {
 		application.mongoDBInterface.DatabaseManager.initDatabase();
@@ -110,6 +124,37 @@ public class MainApp extends Application {
 	        ItemEditDialogController controller = loader.getController();
 	        controller.setDialogStage(dialogStage);
 	        controller.setItem(item);
+
+	        // Show the dialog and wait until the user closes it
+	        dialogStage.showAndWait();
+
+	        return controller.isOkClicked();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+	
+	public boolean showProductGroupEditDialog(ProductGroup productGroup) {
+	    try {
+	        // Load the fxml file and create a new stage for the popup dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(MainApp.class.getResource("view/ProductGroupEditDialog.fxml"));
+	        AnchorPane page = (AnchorPane) loader.load();
+
+	        // Create the dialog Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.setTitle("Produktgruppe bearbeiten");
+	        dialogStage.initModality(Modality.WINDOW_MODAL);
+	        dialogStage.initOwner(primaryStage);
+	        dialogStage.getIcons().add(new Image("file:resources/images/item.png"));
+	        Scene scene = new Scene(page);
+	        dialogStage.setScene(scene);
+
+	        // Set the person into the controller.
+	        ProductGroupEditDialogController controller = loader.getController();
+	        controller.setDialogStage(dialogStage);
+	        controller.setProductGroup(productGroup);
 
 	        // Show the dialog and wait until the user closes it
 	        dialogStage.showAndWait();

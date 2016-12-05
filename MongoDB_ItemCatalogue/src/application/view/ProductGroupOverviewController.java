@@ -4,6 +4,7 @@ import application.MainApp;
 import application.model.Item;
 import application.model.ProductGroup;
 import application.mongoDBInterface.ReferenceClass.ProductGroupHelper;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -21,12 +22,16 @@ public class ProductGroupOverviewController {
     @FXML private Label materialLbl;
     
     private MainApp mainApp;
+    private ObservableList<ProductGroup> productGroupData;
     
     public ProductGroupOverviewController () {
     }
     
     @FXML
     private void initialize() {
+    	productGroupData = ProductGroupHelper.getProductGroups();
+        productGroupTable.setItems(productGroupData);
+    	
     	codeColumn.setCellValueFactory(cellData -> cellData.getValue().getCodeProperty());
     	descrColumn.setCellValueFactory(cellData -> cellData.getValue().getDescriptionProperty());
        
@@ -54,8 +59,6 @@ public class ProductGroupOverviewController {
     
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
-
-        //productGroupTable.setItems(mainApp.getProductGroupData());
     }
     
     @FXML
@@ -69,8 +72,8 @@ public class ProductGroupOverviewController {
             Alert alert = new Alert(AlertType.WARNING);
             alert.initOwner(mainApp.getPrimaryStage());
             alert.setTitle("Keine Auswahl");
-            alert.setHeaderText("Kein Artikel ausgewählt!");
-            alert.setContentText("Bitte Artikel in der Tabelle auswählen.");
+            alert.setHeaderText("Keine Produktgruppe ausgewählt!");
+            alert.setContentText("Bitte Produktgruppe in der Tabelle auswählen.");
 
             alert.showAndWait();
         }
@@ -81,19 +84,19 @@ public class ProductGroupOverviewController {
     	ProductGroup tmpProductGroup = new ProductGroup();
         boolean okClicked = mainApp.showProductGroupEditDialog(tmpProductGroup);
         if (okClicked) {
-            mainApp.getItemData().add(tmpProductGroup);
+        	productGroupData.add(tmpProductGroup);
             ProductGroupHelper.insertProductGroup(tmpProductGroup);
         }
     }
 
     @FXML
-    private void handleEditItem() {
-        Item selectedItem = productGroupTable.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            boolean okClicked = mainApp.showItemEditDialog(selectedItem);
+    private void handleEditProductGroup() {
+        ProductGroup selectedProductGroup = productGroupTable.getSelectionModel().getSelectedItem();
+        if (selectedProductGroup != null) {
+            boolean okClicked = mainApp.showProductGroupEditDialog(selectedProductGroup);
             if (okClicked) {
-                showItemDetails(selectedItem);
-                ItemHelper.updateItem(selectedItem);
+                showProductGroupDetails(selectedProductGroup);
+                ProductGroupHelper.updateProductGroup(selectedProductGroup);
             }
 
         } else {

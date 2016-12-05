@@ -12,12 +12,12 @@ public class RootLayoutController {
     
     @FXML
 	private void handleCoreDataItem() {
-		
+    	mainApp.showItemOverview();
 	}
 	
     @FXML
 	private void handleCoreDataProductGroup() {
-		
+		mainApp.showProductGroupOverview();
 	}
     
     @FXML

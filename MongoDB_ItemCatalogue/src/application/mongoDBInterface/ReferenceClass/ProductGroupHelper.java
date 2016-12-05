@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
 
 public class ProductGroupHelper {
 	
-    private static final String COLLECTION_NAME = "productGroup";
+    public static final String COLLECTION_NAME = "productGroup";
     private static MongoCollection<Document> collection;
     
     public static void insertProductGroup(ProductGroup productGroup) {        

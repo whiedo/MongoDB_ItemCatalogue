@@ -3,6 +3,7 @@ package application.view;
 import application.MainApp;
 import application.model.Item;
 import application.mongoDBInterface.ReferenceClass.ItemHelper;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -20,12 +21,16 @@ public class ItemOverviewController {
     @FXML private Label salespriceLbl;
 
     private MainApp mainApp;
-
+    private ObservableList<Item> itemData;
+    
     public ItemOverviewController() {
     }
 
     @FXML
     private void initialize() {
+    	itemData = ItemHelper.getItems();
+        itemTable.setItems(itemData);
+    	
         NumberColumn.setCellValueFactory(cellData -> cellData.getValue().getNumberProperty());
         DescrColumn.setCellValueFactory(cellData -> cellData.getValue().getDescriptionProperty());
        
@@ -53,8 +58,6 @@ public class ItemOverviewController {
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
-
-        itemTable.setItems(mainApp.getItemData());
     }
     
     @FXML
@@ -80,7 +83,7 @@ public class ItemOverviewController {
         Item tmpItem = new Item();
         boolean okClicked = mainApp.showItemEditDialog(tmpItem);
         if (okClicked) {
-            mainApp.getItemData().add(tmpItem);
+            itemData.add(tmpItem);
             ItemHelper.insertItem(tmpItem);
         }
     }

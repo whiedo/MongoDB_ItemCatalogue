@@ -16,7 +16,7 @@ import javafx.collections.ObservableList;
 
 public class ItemHelper {
 	
-    private static final String COLLECTION_NAME = "item";
+    public static final String COLLECTION_NAME = "item";
     private static MongoCollection<Document> collection;
     
     public static void insertItem(Item item) {        
