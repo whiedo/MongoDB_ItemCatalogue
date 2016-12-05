@@ -27,12 +27,4 @@ public class DatabaseManager {
 			database = mongoClient.getDatabase(DB_NAME);
 		}
 	}
-	
-	public static void insertItemIntoDatabase() throws UnknownHostException {
-		initDatabase();
-		
-		Item item = new Item("12345","lol","lol2",0);
-		ItemHelper.insertItem(item);
-		ItemHelper.getItems();
-	}
 }

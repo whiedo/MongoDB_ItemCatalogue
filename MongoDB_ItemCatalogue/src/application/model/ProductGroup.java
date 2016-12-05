@@ -4,30 +4,28 @@ import java.util.ArrayList;
 
 import org.bson.types.ObjectId;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Item {
+public class ProductGroup {
 
 	private ObjectId objectId;
-	private StringProperty number;
+	private StringProperty code;
 	private StringProperty description;
-	private DoubleProperty salesprice;
+	private StringProperty material;
 
-	public Item() {
-        this(null, null, null, 0);
+	public ProductGroup() {
+        this(null, null, null, null);
     }
 
-    public Item(String id, String number, String description, double salesprice) {
+    public ProductGroup(String id, String code, String description, String material) {
     	if (id != null)
     		this.objectId = new ObjectId(id);
     	else
     		objectId = new ObjectId();
-        this.number = new SimpleStringProperty(number);
+        this.code = new SimpleStringProperty(code);
         this.description = new SimpleStringProperty(description);
-        this.salesprice = new SimpleDoubleProperty(salesprice);
+        this.material = new SimpleStringProperty(material);
     }
     
     public ObjectId getObjectId() {
@@ -39,16 +37,16 @@ public class Item {
 	}
 
     
-	public StringProperty getNumberProperty() {
-		return number;
+	public StringProperty getCodeProperty() {
+		return code;
 	}
 	
-    public String getNumber() {
-        return number.get();
+    public String getCode() {
+        return code.get();
     }
     
-	public void setNumber(String number) {
-		this.number.set(number);
+	public void setCode(String code) {
+		this.code.set(code);
 	}
 
 	public StringProperty getDescriptionProperty() {
@@ -63,15 +61,15 @@ public class Item {
         return description.get();
     }
 
-	public DoubleProperty getSalespriceProperty() {
-		return salesprice;
+	public StringProperty getMaterialProperty() {
+		return material;
 	}
 
-	public void setSalesprice(Double salesprice) {
-		this.salesprice.set(salesprice);
+	public void setMaterial(String material) {
+		this.material.set(material);
 	}
     
-    public Double getSalesprice() {
-    	return salesprice.get();
+    public String getMaterial() {
+    	return material.get();
     }
 }

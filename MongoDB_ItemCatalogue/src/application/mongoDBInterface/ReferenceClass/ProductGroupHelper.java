@@ -1,7 +1,5 @@
 package application.mongoDBInterface.ReferenceClass;
 
-
-
 import org.bson.Document;
 
 import com.mongodb.BasicDBObject;
@@ -9,68 +7,68 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 
-import application.model.Item;
+import application.model.ProductGroup;
 import application.mongoDBInterface.DatabaseManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class ItemHelper {
+public class ProductGroupHelper {
 	
-    private static final String COLLECTION_NAME = "item";
+    private static final String COLLECTION_NAME = "productGroup";
     private static MongoCollection<Document> collection;
     
-    public static void insertItem(Item item) {        
+    public static void insertProductGroup(ProductGroup productGroup) {        
     	getCollection();
     	
-    	Document doc = new Document("_id", item.getObjectId())
-        		.append("number", item.getNumber())
-                .append("description", item.getDescription())
-                .append("salesprice", item.getSalesprice());
+    	Document doc = new Document("_id", productGroup.getObjectId())
+        		.append("code", productGroup.getCode())
+                .append("description", productGroup.getDescription())
+                .append("material", productGroup.getMaterial());
 
         collection.insertOne(doc);
     }
     
-    public static void updateItem(Item item) {     
+    public static void updateProductGroup(ProductGroup productGroup) {     
     	getCollection();
     	
     	BasicDBObject searchQuery = new BasicDBObject();
-    	searchQuery.append("_id", item.getObjectId());
+    	searchQuery.append("_id", productGroup.getObjectId());
     	
     	BasicDBObject updateQuery = new BasicDBObject();
     	updateQuery.append("$set",
     		new BasicDBObject()
-    			.append("number", item.getNumber())
-    			.append("description", item.getDescription())
-    			.append("salesprice", item.getSalesprice()));
+    			.append("code", productGroup.getCode())
+    			.append("description", productGroup.getDescription())
+    			.append("material", productGroup.getMaterial()));
 
     	collection.updateMany(searchQuery, updateQuery);
     }
 	
-	public static ObservableList<Item> getItems() {
+	public static ObservableList<ProductGroup> getProductGroups() {
 		getCollection();
 		
-		ObservableList<Item> items = FXCollections.observableArrayList();
+		ObservableList<ProductGroup> productGroups = FXCollections.observableArrayList();
 		
 		MongoCursor<Document> cursor = collection.find().iterator();
 		try {
 		    while (cursor.hasNext()) {
 		        Document doc = cursor.next();
-		        items.add(new Item(
+		        productGroups.add(new ProductGroup(
 	        			doc.get("_id").toString(),
-		        		doc.get("number").toString(),
+		        		doc.get("code").toString(),
 		        		doc.get("description").toString(),
-		        		Double.parseDouble(doc.get("salesprice").toString())));
+		        		doc.get("material").toString()));
 		    }
 		} finally {
 		    cursor.close();
 		}
-	    return items;
+	    return productGroups;
 	}
 	
-	public static void deleteItem(Item item) {
+	public static void deleteProductGroup(ProductGroup productGroup) {
 		getCollection();
 		
-		collection.deleteOne(Filters.eq("_id", item.getObjectId()));
+		collection.deleteOne(Filters.eq("_id", productGroup.getObjectId()));
 	}
 	
 	private static void getCollection() {

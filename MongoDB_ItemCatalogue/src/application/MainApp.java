@@ -18,6 +18,7 @@ import application.model.*;
 import application.mongoDBInterface.ReferenceClass.ItemHelper;
 import application.view.ItemEditDialogController;
 import application.view.ItemOverviewController;
+import application.view.RootLayoutController;
 public class MainApp extends Application {
 	
 	private Stage primaryStage;
@@ -29,19 +30,7 @@ public class MainApp extends Application {
 		try {
 	        this.primaryStage = primaryStage;
 	        
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
-            borderPane = (BorderPane) loader.load();
-			
-            Scene scene = new Scene(borderPane);
-			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-            primaryStage.getIcons().add(new Image("file:resources/images/item.png"));
-            
-			primaryStage.setTitle("Artikel Katalog");
-			primaryStage.setScene(scene);
-			primaryStage.show();
-						
-			itemData = ItemHelper.getItems();
+	        loadRootLayoutAndDoStyling();
 			
 			showItemOverview();
 			
@@ -50,12 +39,32 @@ public class MainApp extends Application {
 		}
 	}
 	
-    public void showItemOverview() {
+    private void loadRootLayoutAndDoStyling() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
+        borderPane = (BorderPane) loader.load();
+		
+        Scene scene = new Scene(borderPane);
+        scene.getStylesheets().add(STYLESHEET_CASPIAN);
+        primaryStage.getIcons().add(new Image("file:resources/images/item.png"));
+        
+        RootLayoutController rootController = loader.getController();
+        rootController.setMainApp(this);
+        
+		primaryStage.setTitle("Artikelverwaltung");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+
+	public void showItemOverview() {
         try {
+        	itemData = ItemHelper.getItems();
+        	
             // Load item overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/ItemOverview.fxml"));
             AnchorPane itemOverview = (AnchorPane) loader.load();
+            itemOverview.getStylesheets().add(STYLESHEET_CASPIAN);
             
             // Set item overview into the center of root layout.
             borderPane.setCenter(itemOverview);

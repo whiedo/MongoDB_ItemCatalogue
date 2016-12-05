@@ -2,6 +2,7 @@ package application.view;
 
 import application.MainApp;
 import application.model.Item;
+import application.mongoDBInterface.ReferenceClass.ItemHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -16,7 +17,6 @@ public class ItemOverviewController {
     
     @FXML private Label numberLbl;
     @FXML private Label DescrLbl;
-    @FXML private Label Descr2Lbl;
     @FXML private Label salespriceLbl;
 
     private MainApp mainApp;
@@ -42,13 +42,11 @@ public class ItemOverviewController {
             // Fill the labels with info from the item object.
             numberLbl.setText(item.getNumber());
             DescrLbl.setText(item.getDescription());
-            Descr2Lbl.setText(item.getDescription2());
             salespriceLbl.setText(item.getSalesprice().toString());
         } else {
             // Person is null, remove all the text.
         	numberLbl.setText("");
         	DescrLbl.setText("");
-        	Descr2Lbl.setText("");
         	salespriceLbl.setText("");
         }
     }
@@ -63,6 +61,7 @@ public class ItemOverviewController {
     private void handleDeleteItem() {
         int selectedIndex = itemTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
+        	ItemHelper.deleteItem(itemTable.getSelectionModel().getSelectedItem());
             itemTable.getItems().remove(selectedIndex);
         } else {
             // Nothing selected.
@@ -82,6 +81,7 @@ public class ItemOverviewController {
         boolean okClicked = mainApp.showItemEditDialog(tmpItem);
         if (okClicked) {
             mainApp.getItemData().add(tmpItem);
+            ItemHelper.insertItem(tmpItem);
         }
     }
 
@@ -92,6 +92,7 @@ public class ItemOverviewController {
             boolean okClicked = mainApp.showItemEditDialog(selectedItem);
             if (okClicked) {
                 showItemDetails(selectedItem);
+                ItemHelper.updateItem(selectedItem);
             }
 
         } else {

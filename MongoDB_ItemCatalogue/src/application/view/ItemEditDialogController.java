@@ -30,7 +30,6 @@ public class ItemEditDialogController {
 
         numberField.setText(item.getNumber());
         descrField.setText(item.getDescription());
-        descr2Field.setText(item.getDescription2());
         salespriceField.setText(Double.toString(item.getSalesprice()));
     }
 
@@ -43,7 +42,6 @@ public class ItemEditDialogController {
         if (isInputValid()) {
             item.setNumber(numberField.getText());
             item.setDescription(descrField.getText());
-            item.setDescription2(descr2Field.getText());
             item.setSalesprice(Double.parseDouble(salespriceField.getText()));
 
             okClicked = true;
@@ -64,9 +62,6 @@ public class ItemEditDialogController {
         }
         if (descrField.getText() == null || descrField.getText().length() == 0) {
             errorMessage += "Keine gültige Beschreibung!\n"; 
-        }
-        if (descr2Field.getText() == null || descr2Field.getText().length() == 0) {
-            errorMessage += "Keine gültige Beschreibung 2!\n"; 
         }
 
         if (salespriceField.getText() == null || salespriceField.getText().length() == 0) {
