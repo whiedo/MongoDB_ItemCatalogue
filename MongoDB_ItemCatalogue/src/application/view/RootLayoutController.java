@@ -22,7 +22,7 @@ public class RootLayoutController {
     
     @FXML
     private void handleCoreDataVendor() {
-    	
+    	mainApp.showVendorOverview();
     }
     
     @FXML

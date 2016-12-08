@@ -1,7 +1,6 @@
 package application.view;
 
 import application.MainApp;
-import application.model.Item;
 import application.model.ProductGroup;
 import application.mongoDBInterface.ReferenceClass.ProductGroupHelper;
 import javafx.collections.ObservableList;
@@ -103,9 +102,9 @@ public class ProductGroupOverviewController {
             // Nothing selected.
             Alert alert = new Alert(AlertType.WARNING);
             alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("No Selection");
-            alert.setHeaderText("No Person Selected");
-            alert.setContentText("Please select a person in the table.");
+            alert.setTitle("Keine Auswahl");
+            alert.setHeaderText("Keine Produktgruppe ausgewählt!");
+            alert.setContentText("Bitte Produktgruppe in der Tabelle auswählen.");
 
             alert.showAndWait();
         }

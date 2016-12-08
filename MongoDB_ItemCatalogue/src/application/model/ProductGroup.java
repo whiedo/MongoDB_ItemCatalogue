@@ -1,7 +1,5 @@
 package application.model;
 
-import java.util.ArrayList;
-
 import org.bson.types.ObjectId;
 
 import javafx.beans.property.SimpleStringProperty;

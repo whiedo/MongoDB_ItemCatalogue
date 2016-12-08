@@ -102,9 +102,9 @@ public class ItemOverviewController {
             // Nothing selected.
             Alert alert = new Alert(AlertType.WARNING);
             alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("No Selection");
-            alert.setHeaderText("No Person Selected");
-            alert.setContentText("Please select a person in the table.");
+            alert.setTitle("Keine Auswahl");
+            alert.setHeaderText("Kein Artikel ausgewählt!");
+            alert.setContentText("Bitte Artikel in der Tabelle auswählen.");
 
             alert.showAndWait();
         }

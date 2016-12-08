@@ -1,19 +1,22 @@
 package application.view;
 
-import application.model.ProductGroup;
+import application.model.Vendor;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ProductGroupEditDialogController {
+public class VendorEditDialogController {
 	@FXML private TextField codeField;
-    @FXML private TextField descrField;
-    @FXML private TextField materialField;
+    @FXML private TextField nameField;
+    @FXML private TextField addressField;
+    @FXML private TextField contactField;
+    
 
     private Stage dialogStage;
-    private ProductGroup productGroup;
+    private Vendor vendor;
     private boolean okClicked = false;
 
     @FXML
@@ -24,12 +27,13 @@ public class ProductGroupEditDialogController {
         this.dialogStage = dialogStage;
     }
 
-    public void setProductGroup(ProductGroup productGroup) {
-        this.productGroup = productGroup;
+    public void setVendor(Vendor vendor) {
+        this.vendor = vendor;
 
-        codeField.setText(productGroup.getCode());
-        descrField.setText(productGroup.getDescription());
-        materialField.setText(productGroup.getMaterial());
+        codeField.setText(vendor.getCode());
+        nameField.setText(vendor.getName());
+        addressField.setText(vendor.getAddress());
+        contactField.setText(vendor.getContact());
     }
 
     public boolean isOkClicked() {
@@ -39,9 +43,10 @@ public class ProductGroupEditDialogController {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-        	productGroup.setCode(codeField.getText());
-        	productGroup.setDescription(descrField.getText());
-        	productGroup.setMaterial(materialField.getText());
+        	vendor.setCode(codeField.getText());
+        	vendor.setName(nameField.getText());
+        	vendor.setAddress(addressField.getText());
+        	vendor.setContact(contactField.getText());
 
             okClicked = true;
             dialogStage.close();
@@ -57,14 +62,18 @@ public class ProductGroupEditDialogController {
         String errorMessage = "";
 
         if (codeField.getText() == null || codeField.getText().length() == 0) {
-            errorMessage += "Kein gültige Code!\n"; 
+            errorMessage += "Kein gültiger Code!\n"; 
         }
-        if (descrField.getText() == null || descrField.getText().length() == 0) {
+        if (nameField.getText() == null || nameField.getText().length() == 0) {
             errorMessage += "Keine gültige Beschreibung!\n"; 
         }
 
-        if (materialField.getText() == null || materialField.getText().length() == 0) {
-            errorMessage += "Kein gültiges Material!\n"; 
+        if (addressField.getText() == null || addressField.getText().length() == 0) {
+            errorMessage += "Keine gültige Adresse!\n"; 
+        }
+        
+        if (contactField.getText() == null || contactField.getText().length() == 0) {
+            errorMessage += "Kein gültiger Kontakt!\n"; 
         }
 
         if (errorMessage.length() == 0) {

@@ -81,8 +81,8 @@ public class ItemEditDialogController {
             // Show the error message.
             Alert alert = new Alert(AlertType.ERROR);
             alert.initOwner(dialogStage);
-            alert.setTitle("Invalid Fields");
-            alert.setHeaderText("Please correct invalid fields");
+            alert.setTitle("Ungültige Felder");
+            alert.setHeaderText("Bitte ungültige Felder korrigieren!");
             alert.setContentText(errorMessage);
 
             alert.showAndWait();
