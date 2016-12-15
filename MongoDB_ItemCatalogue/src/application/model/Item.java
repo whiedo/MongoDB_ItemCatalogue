@@ -87,4 +87,9 @@ public class Item {
     public ArrayList<Vendor> getVendors() {
     	return vendors;
     }
+    
+    public void addVendor(Vendor v) {
+    	vendors.add(v);
+    }
+    
 }
