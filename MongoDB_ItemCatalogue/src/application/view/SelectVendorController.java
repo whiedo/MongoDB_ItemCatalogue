@@ -45,10 +45,6 @@ public class SelectVendorController {
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
-
-    public void setVendor(Vendor vendor) {
-        this.vendor = vendor;
-    }
     
     public Vendor getVendor() {
     	return vendor;

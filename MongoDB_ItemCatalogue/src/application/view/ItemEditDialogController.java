@@ -118,8 +118,10 @@ public class ItemEditDialogController {
 	        // Show the dialog and wait until the user closes it
 	        dialogStage.showAndWait();
 
+	        //Add vendor to all vendors buffer
 	        tmpVendorItem.addVendor(controller.getVendor());
 	        
+	        //Add vendor to table
         	vendorSubData.add(controller.getVendor());
 	        vendorSubTable.setItems(vendorSubData);
 	        

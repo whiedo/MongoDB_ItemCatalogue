@@ -24,13 +24,7 @@ public class ItemHelper {
     public static void insertItem(Item item) {        
     	getCollection();
     	
-    	ArrayList<BasicDBObject> vendorDocs = new ArrayList<>();
-    	for(Vendor v : item.getVendors()) {
-    		BasicDBObject vendorsObj = new BasicDBObject("_id",v.getObjectId());
-    		vendorsObj.put("code", v.getCode());
-    		vendorsObj.put("name", v.getName());
-    		vendorDocs.add(vendorsObj);
-    	}
+    	ArrayList<BasicDBObject> vendorDocs = getVendorDocFromItem(item);
     	
     	Document doc = new Document("_id", item.getObjectId())
         		.append("number", item.getNumber())
@@ -44,6 +38,8 @@ public class ItemHelper {
     public static void updateItem(Item item) {     
     	getCollection();
     	
+    	ArrayList<BasicDBObject> vendorDocs = getVendorDocFromItem(item);
+    	
     	BasicDBObject searchQuery = new BasicDBObject();
     	searchQuery.append("_id", item.getObjectId());
     	
@@ -52,9 +48,24 @@ public class ItemHelper {
     		new BasicDBObject()
     			.append("number", item.getNumber())
     			.append("description", item.getDescription())
-    			.append("salesprice", item.getSalesprice()));
+    			.append("salesprice", item.getSalesprice())
+    			.append("vendors", vendorDocs));
 
     	collection.updateMany(searchQuery, updateQuery);
+    }
+    
+    public static ArrayList<BasicDBObject> getVendorDocFromItem(Item item) {
+    	ArrayList<BasicDBObject> vendorDocs = new ArrayList<>();
+    	for(Vendor v : item.getVendors()) {
+    		BasicDBObject vendorsObj = new BasicDBObject("_id",v.getObjectId());
+    		vendorsObj.put("code", v.getCode());
+    		vendorsObj.put("name", v.getName());
+    		vendorsObj.put("address", v.getAddress());
+    		vendorsObj.put("contact", v.getContact());
+    		vendorDocs.add(vendorsObj);
+    	}
+    	
+    	return vendorDocs;
     }
 	
 	public static ObservableList<Item> getItems() {
