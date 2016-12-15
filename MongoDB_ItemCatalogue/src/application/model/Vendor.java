@@ -61,7 +61,7 @@ public class Vendor {
         return name.get();
     }
 
-	public StringProperty getMaterialProperty() {
+	public StringProperty getAddressProperty() {
 		return address;
 	}
 

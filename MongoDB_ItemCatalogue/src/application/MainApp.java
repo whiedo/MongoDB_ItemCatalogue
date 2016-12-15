@@ -1,6 +1,7 @@
 package application;
 	
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import application.model.*;
+import application.mongoDBInterface.ReferenceClass.ItemHelper;
 import application.view.ItemEditDialogController;
 import application.view.ItemOverviewController;
 import application.view.ProductGroupEditDialogController;

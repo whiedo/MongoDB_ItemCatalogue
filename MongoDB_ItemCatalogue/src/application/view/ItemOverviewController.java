@@ -2,6 +2,7 @@ package application.view;
 
 import application.MainApp;
 import application.model.Item;
+import application.model.Vendor;
 import application.mongoDBInterface.ReferenceClass.ItemHelper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,8 +14,11 @@ import javafx.scene.control.TableView;
 
 public class ItemOverviewController {
 	@FXML private TableView<Item> itemTable;
-    @FXML private TableColumn<Item, String> NumberColumn;
-    @FXML private TableColumn<Item, String> DescrColumn;
+	@FXML private TableView<Vendor> vendorSubTable;
+    @FXML private TableColumn<Item, String> numberColumn;
+    @FXML private TableColumn<Item, String> descrColumn;
+    @FXML private TableColumn<Vendor, String> codeColumn;
+    @FXML private TableColumn<Vendor, String> nameColumn;
     
     @FXML private Label numberLbl;
     @FXML private Label DescrLbl;
@@ -22,6 +26,7 @@ public class ItemOverviewController {
 
     private MainApp mainApp;
     private ObservableList<Item> itemData;
+    private ObservableList<Vendor> vendorSubData;
     
     public ItemOverviewController() {
     }
@@ -30,9 +35,15 @@ public class ItemOverviewController {
     private void initialize() {
     	itemData = ItemHelper.getItems();
         itemTable.setItems(itemData);
-    	
-        NumberColumn.setCellValueFactory(cellData -> cellData.getValue().getNumberProperty());
-        DescrColumn.setCellValueFactory(cellData -> cellData.getValue().getDescriptionProperty());
+        
+        vendorSubData = null;
+        vendorSubTable.setItems(vendorSubData);
+        
+        numberColumn.setCellValueFactory(cellData -> cellData.getValue().getNumberProperty());
+        descrColumn.setCellValueFactory(cellData -> cellData.getValue().getDescriptionProperty());
+        
+        codeColumn.setCellValueFactory(cellData -> cellData.getValue().getCodeProperty());
+        nameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
        
         // Clear item details.
         showItemDetails(null);
@@ -48,11 +59,17 @@ public class ItemOverviewController {
             numberLbl.setText(item.getNumber());
             DescrLbl.setText(item.getDescription());
             salespriceLbl.setText(item.getSalesprice().toString());
+            
+            vendorSubData = ItemHelper.getVendorsOfItem(item);
+            vendorSubTable.setItems(vendorSubData);
         } else {
             // Person is null, remove all the text.
         	numberLbl.setText("");
         	DescrLbl.setText("");
         	salespriceLbl.setText("");
+        	
+        	vendorSubData = null;
+            vendorSubTable.setItems(vendorSubData);
         }
     }
 

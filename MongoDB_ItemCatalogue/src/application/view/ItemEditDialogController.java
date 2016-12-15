@@ -1,8 +1,13 @@
 package application.view;
 
 import application.model.Item;
+import application.model.Vendor;
+import application.mongoDBInterface.ReferenceClass.ItemHelper;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -12,13 +17,27 @@ public class ItemEditDialogController {
     @FXML private TextField descrField;
     @FXML private TextField descr2Field;
     @FXML private TextField salespriceField;
+    
+	@FXML private TableView<Vendor> vendorSubTable;
+    @FXML private TableColumn<Vendor, String> codeColumn;
+    @FXML private TableColumn<Vendor, String> nameColumn;
+    @FXML private TableColumn<Vendor, String> addressColumn;
+    @FXML private TableColumn<Vendor, String> contactColumn;
 
     private Stage dialogStage;
     private Item item;
     private boolean okClicked = false;
+    private ObservableList<Vendor> vendorSubData;
 
     @FXML
     private void initialize() {
+        vendorSubData = null;
+        vendorSubTable.setItems(vendorSubData);
+    	
+        codeColumn.setCellValueFactory(cellData -> cellData.getValue().getCodeProperty());
+        nameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
+        addressColumn.setCellValueFactory(cellData -> cellData.getValue().getAddressProperty());
+        contactColumn.setCellValueFactory(cellData -> cellData.getValue().getContactProperty());
     }
 
     public void setDialogStage(Stage dialogStage) {
@@ -31,6 +50,10 @@ public class ItemEditDialogController {
         numberField.setText(item.getNumber());
         descrField.setText(item.getDescription());
         salespriceField.setText(Double.toString(item.getSalesprice()));
+        
+        
+        vendorSubData = ItemHelper.getVendorsOfItem(item);
+        vendorSubTable.setItems(vendorSubData);
     }
 
     public boolean isOkClicked() {

@@ -1,5 +1,7 @@
 package application.model;
 
+import java.util.ArrayList;
+
 import org.bson.types.ObjectId;
 
 import javafx.beans.property.DoubleProperty;
@@ -13,12 +15,13 @@ public class Item {
 	private StringProperty number;
 	private StringProperty description;
 	private DoubleProperty salesprice;
+	private ArrayList<Vendor> vendors;
 
 	public Item() {
-        this(null, null, null, 0);
+        this(null, null, null, 0, null);
     }
 
-    public Item(String id, String number, String description, double salesprice) {
+    public Item(String id, String number, String description, double salesprice, ArrayList<Vendor> vendors) {
     	if (id != null)
     		this.objectId = new ObjectId(id);
     	else
@@ -26,6 +29,10 @@ public class Item {
         this.number = new SimpleStringProperty(number);
         this.description = new SimpleStringProperty(description);
         this.salesprice = new SimpleDoubleProperty(salesprice);
+        if (vendors != null)
+        	this.vendors = vendors;
+        else
+        	this.vendors = new ArrayList<Vendor>();
     }
     
     public ObjectId getObjectId() {
@@ -71,5 +78,13 @@ public class Item {
     
     public Double getSalesprice() {
     	return salesprice.get();
+    }
+    
+	public void setVendors(ArrayList<Vendor> vendors) {
+		this.vendors = vendors;
+	}
+    
+    public ArrayList<Vendor> getVendors() {
+    	return vendors;
     }
 }
