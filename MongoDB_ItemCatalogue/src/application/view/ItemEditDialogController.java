@@ -1,6 +1,7 @@
 package application.view;
 
 import java.io.IOException;
+import java.util.ListIterator;
 
 import application.MainApp;
 import application.model.Item;
@@ -23,7 +24,6 @@ import javafx.stage.Stage;
 public class ItemEditDialogController {
 	@FXML private TextField numberField;
     @FXML private TextField descrField;
-    @FXML private TextField descr2Field;
     @FXML private TextField salespriceField;
     
 	@FXML private TableView<Vendor> vendorSubTable;
@@ -64,6 +64,8 @@ public class ItemEditDialogController {
         
         vendorSubData = ItemHelper.getVendorsOfItem(item);
         vendorSubTable.setItems(vendorSubData);
+        
+        tmpVendorItem.setVendors(item.getVendors());
     }
 
     public boolean isOkClicked() {
@@ -75,11 +77,8 @@ public class ItemEditDialogController {
         if (isInputValid()) {
             item.setNumber(numberField.getText());
             item.setDescription(descrField.getText());
-            item.setSalesprice(Double.parseDouble(salespriceField.getText()));
-            
-            for(Vendor v : tmpVendorItem.getVendors()) {
-            	item.addVendor(v);
-            }
+            item.setSalesprice(Double.parseDouble(salespriceField.getText())); 
+            item.setVendors(tmpVendorItem.getVendors());
             
             okClicked = true;
             dialogStage.close();
@@ -128,6 +127,36 @@ public class ItemEditDialogController {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
+    }
+    
+    @FXML
+    private void handleDeleteVendor() {
+    	handleDeleteVendor(item);
+    }
+    
+    private void handleDeleteVendor(Item item) {   
+    	Vendor vendor = vendorSubTable.getSelectionModel().getSelectedItem();
+    	
+        int selectedIndex = vendorSubTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+        	ListIterator<Vendor> listIterator = tmpVendorItem.getVendors().listIterator();
+        	while(listIterator.hasNext()) {
+        		Vendor v = listIterator.next();
+        		if (v.getObjectId().toString().contentEquals(vendor.getObjectId().toString())) {
+        			listIterator.remove();
+        			break;
+        		}
+        	}
+        	vendorSubTable.getItems().remove(selectedIndex);
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Keine Auswahl");
+            alert.setHeaderText("Keinen Lieferanten ausgewählt!");
+            alert.setContentText("Bitte Lieferanten in der Tabelle auswählen.");
+
+            alert.showAndWait();
+        }
     }
 
     private boolean isInputValid() {
