@@ -14,7 +14,7 @@ public class Vendor {
 	private StringProperty contact;
 
 	public Vendor() {
-        this(null, null, null, null, null);
+        this(null, "", "", "", "");
     }
 
     public Vendor(String id, String code, String name, String address, String contact) {

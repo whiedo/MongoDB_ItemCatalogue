@@ -3,7 +3,6 @@ package application;
 import java.io.IOException;
 
 import com.aquafx_project.AquaFx;
-import com.aquafx_project.controls.skin.styles.ControlSizeVariant;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +17,7 @@ import application.model.*;
 import application.view.ItemEditDialogController;
 import application.view.ItemOverviewController;
 import application.view.ProductGroupEditDialogController;
+import application.view.ProductGroupItemStaticticsController;
 import application.view.ProductGroupOverviewController;
 import application.view.RootLayoutController;
 import application.view.VendorEditDialogController;
@@ -210,6 +210,29 @@ public class MainApp extends Application {
 	        e.printStackTrace();
 	        return false;
 	    }
+	}
+	
+	public void showProductGroupItemStatistics() {
+        try {
+            // Load item overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/ProductGroupItemStatistics.fxml"));
+            AnchorPane productGroupItemStatistics = (AnchorPane) loader.load();
+            
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Artikel nach Produktgruppen");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(productGroupItemStatistics);
+            dialogStage.setScene(scene);
+            
+            ProductGroupItemStaticticsController controller = loader.getController();
+            controller.setMainApp(this);
+            
+            dialogStage.show();
+        } catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Window getPrimaryStage() {

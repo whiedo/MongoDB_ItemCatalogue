@@ -23,6 +23,7 @@ public class ItemOverviewController {
     @FXML private Label numberLbl;
     @FXML private Label DescrLbl;
     @FXML private Label salespriceLbl;
+    @FXML private Label productGroupLbl;
 
     private MainApp mainApp;
     private ObservableList<Item> itemData;
@@ -59,6 +60,7 @@ public class ItemOverviewController {
             numberLbl.setText(item.getNumber());
             DescrLbl.setText(item.getDescription());
             salespriceLbl.setText(item.getSalesprice().toString());
+            productGroupLbl.setText(item.getProductGroup());
             
             vendorSubData = ItemHelper.getVendorsOfItem(item);
             vendorSubTable.setItems(vendorSubData);
@@ -67,6 +69,7 @@ public class ItemOverviewController {
         	numberLbl.setText("");
         	DescrLbl.setText("");
         	salespriceLbl.setText("");
+        	productGroupLbl.setText("");
         	
         	vendorSubData = null;
             vendorSubTable.setItems(vendorSubData);

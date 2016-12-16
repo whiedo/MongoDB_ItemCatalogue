@@ -51,7 +51,9 @@ public class ItemEditDialogController {
         //empty item for saving all vendors for edited item
         tmpVendorItem = new Item();
         
+        //add product group list to combo button
         ObservableList<String> productGroupList = ProductGroupHelper.getProductGroupsAsStringList();
+        productGroupList.add("");
         productGroupComboBox.setItems(productGroupList);
     	
         codeColumn.setCellValueFactory(cellData -> cellData.getValue().getCodeProperty());
@@ -70,6 +72,8 @@ public class ItemEditDialogController {
         numberField.setText(item.getNumber());
         descrField.setText(item.getDescription());
         salespriceField.setText(Double.toString(item.getSalesprice()));
+        if (item.getProductGroup() != "")
+        	productGroupComboBox.getSelectionModel().select(item.getProductGroup());
         
         vendorSubData = ItemHelper.getVendorsOfItem(item);
         vendorSubTable.setItems(vendorSubData);
@@ -87,6 +91,10 @@ public class ItemEditDialogController {
             item.setNumber(numberField.getText());
             item.setDescription(descrField.getText());
             item.setSalesprice(Double.parseDouble(salespriceField.getText())); 
+            if (productGroupComboBox.getSelectionModel().getSelectedItem() == null)
+            	item.setProductGroup("");
+            else
+            	item.setProductGroup(productGroupComboBox.getSelectionModel().getSelectedItem());
             item.setVendors(tmpVendorItem.getVendors());
             
             okClicked = true;

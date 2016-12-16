@@ -30,6 +30,7 @@ public class ItemHelper {
         		.append("number", item.getNumber())
                 .append("description", item.getDescription())
                 .append("salesprice", item.getSalesprice())
+                .append("productGroup", item.getProductGroup())
                 .append("vendors", vendorDocs);
 
         collection.insertOne(doc);
@@ -49,6 +50,7 @@ public class ItemHelper {
     			.append("number", item.getNumber())
     			.append("description", item.getDescription())
     			.append("salesprice", item.getSalesprice())
+    			.append("productGroup", item.getProductGroup())
     			.append("vendors", vendorDocs));
 
     	collection.updateMany(searchQuery, updateQuery);
@@ -98,6 +100,7 @@ public class ItemHelper {
 		        		doc.get("number").toString(),
 		        		doc.get("description").toString(),
 		        		Double.parseDouble(doc.get("salesprice").toString()),
+		        		doc.get("productGroup").toString(),
 		        		vendors));
 		    }
 		} finally {
@@ -133,6 +136,26 @@ public class ItemHelper {
 		}
 		
 	    return vendors;
+	}
+	
+	public static Integer getItemCountPerProductGroupCode(String productGroupCode) {
+		getCollection();
+		Integer i = 0;
+		
+		BasicDBObject searchQuery = new BasicDBObject();
+    	searchQuery.append("productGroup", productGroupCode);
+    	
+    	MongoCursor<Document> cursor = collection.find(searchQuery).iterator();
+		try {
+		    while (cursor.hasNext()) {
+		        cursor.next();
+		        i++;
+		    }
+		} finally {
+		    cursor.close();
+		}
+		
+	    return i;
 	}
 	
 	public static void deleteItem(Item item) {

@@ -13,7 +13,7 @@ public class ProductGroup {
 	private StringProperty material;
 
 	public ProductGroup() {
-        this(null, null, null, null);
+        this(null, "", "", "");
     }
 
     public ProductGroup(String id, String code, String description, String material) {

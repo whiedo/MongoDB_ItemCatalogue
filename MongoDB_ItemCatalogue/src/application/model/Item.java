@@ -15,13 +15,14 @@ public class Item {
 	private StringProperty number;
 	private StringProperty description;
 	private DoubleProperty salesprice;
+	private StringProperty productGroup;
 	private ArrayList<Vendor> vendors;
 
 	public Item() {
-        this(null, null, null, 0, null);
+        this(null, "", "", 0, "", null);
     }
 
-    public Item(String id, String number, String description, double salesprice, ArrayList<Vendor> vendors) {
+    public Item(String id, String number, String description, double salesprice, String productGroup, ArrayList<Vendor> vendors) {
     	if (id != null)
     		this.objectId = new ObjectId(id);
     	else
@@ -29,6 +30,7 @@ public class Item {
         this.number = new SimpleStringProperty(number);
         this.description = new SimpleStringProperty(description);
         this.salesprice = new SimpleDoubleProperty(salesprice);
+        this.productGroup = new SimpleStringProperty(productGroup);
         if (vendors != null)
         	this.vendors = vendors;
         else
@@ -78,6 +80,18 @@ public class Item {
     
     public Double getSalesprice() {
     	return salesprice.get();
+    }
+    
+	public StringProperty getProductGroupProperty() {
+		return productGroup;
+	}
+	
+	public void setProductGroup(String productGroup) {
+		this.productGroup.set(productGroup);
+	}
+	
+    public String getProductGroup() {
+        return productGroup.get();
     }
     
 	public void setVendors(ArrayList<Vendor> vendors) {

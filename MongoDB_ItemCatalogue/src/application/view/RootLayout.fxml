@@ -16,7 +16,10 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleCoreDataVendor" text="Lieferant" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" onAction="#handleItemVendorStatistic" text="Auswertung nach Lieferanten" />
+          <Menu mnemonicParsing="false" text="Auswertungen">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleProductGroupItemStatistics" text="Artikel nach Produktgruppe" />
+               </items></Menu>
         </menus>
       </MenuBar>
    </top>

@@ -26,8 +26,8 @@ public class RootLayoutController {
     }
     
     @FXML
-    private void handleItemVendorStatistic() {
-    	
+    private void handleProductGroupItemStatistics() {
+    	mainApp.showProductGroupItemStatistics();
     }
 	
     public void setMainApp(MainApp mainApp) {
