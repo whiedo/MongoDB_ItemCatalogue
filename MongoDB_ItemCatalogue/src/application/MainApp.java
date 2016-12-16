@@ -1,7 +1,9 @@
 package application;
 	
 import java.io.IOException;
-import java.util.ArrayList;
+
+import com.aquafx_project.AquaFx;
+import com.aquafx_project.controls.skin.styles.ControlSizeVariant;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import application.model.*;
-import application.mongoDBInterface.ReferenceClass.ItemHelper;
 import application.view.ItemEditDialogController;
 import application.view.ItemOverviewController;
 import application.view.ProductGroupEditDialogController;
@@ -52,7 +53,11 @@ public class MainApp extends Application {
         borderPane = (BorderPane) loader.load();
 		
         Scene scene = new Scene(borderPane);
-        scene.getStylesheets().add(STYLESHEET_CASPIAN);
+        
+        //automatically style whole application with aquafx
+        AquaFx.style();
+        
+        //add icon
         primaryStage.getIcons().add(new Image("file:resources/images/item.png"));
         
         RootLayoutController rootController = loader.getController();
@@ -69,7 +74,6 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/ItemOverview.fxml"));
             AnchorPane itemOverview = (AnchorPane) loader.load();
-            itemOverview.getStylesheets().add(STYLESHEET_CASPIAN);
             
             // Set item overview into the center of root layout.
             borderPane.setCenter(itemOverview);
@@ -87,7 +91,6 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/ProductGroupOverview.fxml"));
             AnchorPane productGroupOverview = (AnchorPane) loader.load();
-            productGroupOverview.getStylesheets().add(STYLESHEET_CASPIAN);
             
             // Set item overview into the center of root layout.
             borderPane.setCenter(productGroupOverview);
@@ -105,7 +108,6 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/VendorOverview.fxml"));
             AnchorPane vendorOverview = (AnchorPane) loader.load();
-            vendorOverview.getStylesheets().add(STYLESHEET_CASPIAN);
             
             // Set item overview into the center of root layout.
             borderPane.setCenter(vendorOverview);

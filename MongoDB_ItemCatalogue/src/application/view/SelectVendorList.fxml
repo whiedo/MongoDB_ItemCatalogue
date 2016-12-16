@@ -12,8 +12,8 @@
         <columns>
           <TableColumn fx:id="codeColumn" prefWidth="75.0" text="Code" />
           <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
-            <TableColumn fx:id="addressColumn" prefWidth="75.0" text="Address" />
-            <TableColumn fx:id="contactColumn" prefWidth="75.0" text="Contact" />
+            <TableColumn fx:id="addressColumn" prefWidth="75.0" text="Adresse" />
+            <TableColumn fx:id="contactColumn" prefWidth="75.0" text="Kontakt" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

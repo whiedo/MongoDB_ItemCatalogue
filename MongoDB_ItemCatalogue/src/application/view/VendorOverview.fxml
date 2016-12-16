@@ -58,7 +58,7 @@
                         <Label fx:id="contactLbl" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
-                  <ButtonBar layoutX="559.0" layoutY="744.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                  <ButtonBar layoutX="559.0" layoutY="744.0" prefHeight="40.0" prefWidth="400.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                      <buttons>
                         <Button mnemonicParsing="false" onAction="#handleNewVendor" text="Neu" />
                         <Button mnemonicParsing="false" onAction="#handleEditVendor" text="Bearbeiten" />

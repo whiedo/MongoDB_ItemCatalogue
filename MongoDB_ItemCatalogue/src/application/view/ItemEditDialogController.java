@@ -5,8 +5,11 @@ import java.util.ListIterator;
 
 import application.MainApp;
 import application.model.Item;
+import application.model.ProductGroup;
 import application.model.Vendor;
 import application.mongoDBInterface.ReferenceClass.ItemHelper;
+import application.mongoDBInterface.ReferenceClass.ProductGroupHelper;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.TextField;
@@ -25,6 +29,7 @@ public class ItemEditDialogController {
 	@FXML private TextField numberField;
     @FXML private TextField descrField;
     @FXML private TextField salespriceField;
+    @FXML private ComboBox<String> productGroupComboBox;
     
 	@FXML private TableView<Vendor> vendorSubTable;
     @FXML private TableColumn<Vendor, String> codeColumn;
@@ -42,8 +47,12 @@ public class ItemEditDialogController {
     private void initialize() {
         vendorSubData = null;
         vendorSubTable.setItems(vendorSubData);
-        
+
+        //empty item for saving all vendors for edited item
         tmpVendorItem = new Item();
+        
+        ObservableList<String> productGroupList = ProductGroupHelper.getProductGroupsAsStringList();
+        productGroupComboBox.setItems(productGroupList);
     	
         codeColumn.setCellValueFactory(cellData -> cellData.getValue().getCodeProperty());
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());

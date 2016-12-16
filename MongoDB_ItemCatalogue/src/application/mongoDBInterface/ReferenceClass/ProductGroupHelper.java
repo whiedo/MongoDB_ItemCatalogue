@@ -65,6 +65,23 @@ public class ProductGroupHelper {
 	    return productGroups;
 	}
 	
+	public static ObservableList<String> getProductGroupsAsStringList() {
+		getCollection();
+		
+		ObservableList<String> productGroups = FXCollections.observableArrayList();
+		
+		MongoCursor<Document> cursor = collection.find().iterator();
+		try {
+		    while (cursor.hasNext()) {
+		        Document doc = cursor.next();
+		        productGroups.add(doc.get("code").toString());
+		    }
+		} finally {
+		    cursor.close();
+		}
+	    return productGroups;
+	}
+	
 	public static void deleteProductGroup(ProductGroup productGroup) {
 		getCollection();
 		
