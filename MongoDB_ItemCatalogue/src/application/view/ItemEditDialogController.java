@@ -5,11 +5,9 @@ import java.util.ListIterator;
 
 import application.MainApp;
 import application.model.Item;
-import application.model.ProductGroup;
 import application.model.Vendor;
 import application.mongoDBInterface.ReferenceClass.ItemHelper;
 import application.mongoDBInterface.ReferenceClass.ProductGroupHelper;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

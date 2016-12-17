@@ -14,12 +14,15 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import application.model.*;
+import application.mongoDBInterface.ReferenceClass.ItemSalesHelper;
 import application.view.ItemEditDialogController;
 import application.view.ItemOverviewController;
+import application.view.ItemSalesController;
 import application.view.ProductGroupEditDialogController;
 import application.view.ProductGroupItemStaticticsController;
 import application.view.ProductGroupOverviewController;
 import application.view.RootLayoutController;
+import application.view.SalesStatisticsController;
 import application.view.VendorEditDialogController;
 import application.view.VendorOverviewController;
 
@@ -212,6 +215,35 @@ public class MainApp extends Application {
 	    }
 	}
 	
+	public void showItemSales() {
+	    try {
+	        // Load the fxml file and create a new stage for the popup dialog.
+	        FXMLLoader loader = new FXMLLoader();
+	        loader.setLocation(MainApp.class.getResource("view/ItemSales.fxml"));
+	        AnchorPane page = (AnchorPane) loader.load();
+
+	        // Create the dialog Stage.
+	        Stage dialogStage = new Stage();
+	        dialogStage.setTitle("Verkäufe erfassen");
+	        dialogStage.initModality(Modality.WINDOW_MODAL);
+	        dialogStage.initOwner(primaryStage);
+	        dialogStage.getIcons().add(new Image("file:resources/images/item.png"));
+	        Scene scene = new Scene(page);
+	        dialogStage.setScene(scene);
+
+	        // Set the person into the controller.
+	        ItemSalesController controller = loader.getController();
+	        controller.setMainApp(this);
+
+	        // Show the dialog and wait until the user closes it
+	        dialogStage.showAndWait();
+	        ItemSalesHelper.updateMultipleItemSales(controller.getItemSalesList());
+	            
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
 	public void showProductGroupItemStatistics() {
         try {
             // Load item overview.
@@ -228,6 +260,28 @@ public class MainApp extends Application {
             
             ProductGroupItemStaticticsController controller = loader.getController();
             controller.setMainApp(this);
+            
+            dialogStage.show();
+        } catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void showSalesStatistics() {
+        try {
+            // Load item overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/SalesStatistics.fxml"));
+            AnchorPane salesStatistics = (AnchorPane) loader.load();
+            
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Verkaufsstatistik");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(salesStatistics);
+            dialogStage.setScene(scene);
+            
+            SalesStatisticsController controller = loader.getController();
             
             dialogStage.show();
         } catch (IOException e) {

@@ -1,27 +1,28 @@
 package application.view;
 
-import application.MainApp;
+import application.model.ItemSales;
 import application.mongoDBInterface.ReferenceClass.ItemHelper;
+import application.mongoDBInterface.ReferenceClass.ItemSalesHelper;
 import application.mongoDBInterface.ReferenceClass.ProductGroupHelper;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.XYChart;
 
-public class ProductGroupItemStaticticsController {
+public class SalesStatisticsController {
 	@FXML private BarChart<String, Integer> barChart;
 	@FXML private CategoryAxis xAxis;
 	
-    private MainApp mainApp;
-	private ObservableList<String> productGroupNames;
-		
+	private ObservableList<String> itemNames;
+	
 	@FXML
 	private void initialize() {
-		productGroupNames = ProductGroupHelper.getProductGroupsAsStringList();
-	    xAxis.setCategories(productGroupNames);
+		itemNames = getTopTenItemNames();
+	    xAxis.setCategories(itemNames);
 	    
-	    setXData(productGroupNames);
+	    setXData(itemNames);
 	}
 	
 	public void setXData(ObservableList<String> productGroups) {
@@ -41,7 +42,16 @@ public class ProductGroupItemStaticticsController {
         barChart.getData().add(series);
 	}
 	
-    public void setMainApp(MainApp mainApp) {
-        this.mainApp = mainApp;
-    }
+	private ObservableList<String> getTopTenItemNames() {
+		ObservableList<String> itemNames = FXCollections.observableArrayList();
+		
+		ObservableList<ItemSales> itemSales = ItemSalesHelper.getTopTenItemSales();
+		
+		for(ItemSales itemSale : itemSales) {
+			itemNames.add(itemSale.getItemNumber());
+		}
+		
+		return itemNames;	
+	}
+
 }

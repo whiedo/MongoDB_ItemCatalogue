@@ -44,7 +44,6 @@ public class Item {
 	public void setObjectId(ObjectId objectId) {
 		this.objectId = objectId;
 	}
-
     
 	public StringProperty getNumberProperty() {
 		return number;

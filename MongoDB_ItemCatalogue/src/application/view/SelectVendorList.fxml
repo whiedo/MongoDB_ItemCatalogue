@@ -19,7 +19,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Label layoutX="47.0" layoutY="21.0" text="Lieferantenauswahl" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <Label layoutX="47.0" layoutY="21.0" text="Lieferantenauswahl" AnchorPane.leftAnchor="13.0" AnchorPane.topAnchor="13.0">
          <font>
             <Font size="18.0" />
          </font>
