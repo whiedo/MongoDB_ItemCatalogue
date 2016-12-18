@@ -59,7 +59,7 @@ public class ItemOverviewController {
             // Fill the labels with info from the item object.
             numberLbl.setText(item.getNumber());
             DescrLbl.setText(item.getDescription());
-            salespriceLbl.setText(item.getSalesprice().toString());
+            salespriceLbl.setText(item.getSalesprice().toString().replace(".", ","));
             productGroupLbl.setText(item.getProductGroup());
             
             vendorSubData = ItemHelper.getVendorsOfItem(item);

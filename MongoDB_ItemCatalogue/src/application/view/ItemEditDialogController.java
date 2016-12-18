@@ -1,11 +1,11 @@
 package application.view;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ListIterator;
-
-import org.bson.Document;
-
-import com.mongodb.client.MongoCursor;
+import java.util.Locale;
 
 import application.MainApp;
 import application.model.Item;
@@ -13,6 +13,8 @@ import application.model.Vendor;
 import application.mongoDBInterface.ReferenceClass.ItemHelper;
 import application.mongoDBInterface.ReferenceClass.ProductGroupHelper;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -73,7 +75,7 @@ public class ItemEditDialogController {
 
         numberField.setText(item.getNumber());
         descrField.setText(item.getDescription());
-        salespriceField.setText(Double.toString(item.getSalesprice()));
+        salespriceField.setText(item.getSalesprice().toString().replace(".", ","));
         if (item.getProductGroup() != "")
         	productGroupComboBox.getSelectionModel().select(item.getProductGroup());
         
@@ -191,13 +193,16 @@ public class ItemEditDialogController {
         }
 
         if (salespriceField.getText() == null || salespriceField.getText().length() == 0) {
-            errorMessage += "Kein gültiger Verkaufspreis!\n"; 
+            errorMessage += "Kein gültiger Verkaufspreis!\n";
         } else {
-            try {
-                Double.parseDouble(salespriceField.getText());
-            } catch (NumberFormatException e) {
-                errorMessage += "Kein gültiger Verkaufspreis (Muss Zahl sein)!\n"; 
-            }
+            NumberFormat nf = DecimalFormat.getInstance(Locale.GERMAN);
+            Number number = 0;
+    		try {
+    			number = nf.parse(salespriceField.getText());
+    			salespriceField.setText(Double.parseDouble(number + "") + "");
+    		} catch (ParseException e) {
+    			errorMessage += "Kein gültiger Verkaufspreis!\n";
+    		}
         }
         
         //check database (first build tmpItem which will be inserted)

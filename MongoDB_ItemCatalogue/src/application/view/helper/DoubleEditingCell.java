@@ -1,5 +1,9 @@
 package application.view.helper;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import application.model.ItemSales;
@@ -9,7 +13,6 @@ import javafx.scene.control.TextField;
 public class DoubleEditingCell extends TableCell<ItemSales, Double> {
 
     private final TextField textField = new TextField();
-    private final Pattern doublePattern = Pattern.compile("\\d+\\.\\d+");
 
     public DoubleEditingCell() {
         textField.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
@@ -22,11 +25,15 @@ public class DoubleEditingCell extends TableCell<ItemSales, Double> {
 
     private void processEdit() {
         String text = textField.getText();
-        if (doublePattern.matcher(text).matches()) {
-            commitEdit(Double.parseDouble(text));
-        } else {
-            cancelEdit();
-        }
+        NumberFormat nf = DecimalFormat.getInstance(Locale.GERMAN);
+        Number number = 0;
+		try {
+			number = nf.parse(text);
+			commitEdit(Double.parseDouble(number + ""));
+		} catch (ParseException e) {
+			cancelEdit();
+			e.printStackTrace();
+		}
     }
 
     @Override
@@ -63,7 +70,6 @@ public class DoubleEditingCell extends TableCell<ItemSales, Double> {
         setGraphic(null);
     }
 
-    // This seems necessary to persist the edit on loss of focus; not sure why:
     @Override
     public void commitEdit(Double value) {
         super.commitEdit(value);
