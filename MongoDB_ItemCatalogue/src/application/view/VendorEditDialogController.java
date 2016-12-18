@@ -1,9 +1,9 @@
 package application.view;
 
 import application.model.Vendor;
+import application.mongoDBInterface.ReferenceClass.VendorHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -61,6 +61,7 @@ public class VendorEditDialogController {
     private boolean isInputValid() {
         String errorMessage = "";
 
+        //check syntax
         if (codeField.getText() == null || codeField.getText().length() == 0) {
             errorMessage += "Kein gültiger Code!\n"; 
         }
@@ -75,7 +76,17 @@ public class VendorEditDialogController {
         if (contactField.getText() == null || contactField.getText().length() == 0) {
             errorMessage += "Kein gültiger Kontakt!\n"; 
         }
-
+        
+        //check database (first build tmpProductGroup which will be inserted)
+        Vendor tmpVendor = new Vendor(
+        		vendor.getObjectId().toString(), codeField.getText(), nameField.getText(),
+        		addressField.getText(), contactField.getText());
+        
+        if (VendorHelper.vendorAlreadyExists(tmpVendor)) {
+        	errorMessage += "Lieferantencode bereits vergeben!\n";
+        }
+        
+        //give return value
         if (errorMessage.length() == 0) {
             return true;
         } else {

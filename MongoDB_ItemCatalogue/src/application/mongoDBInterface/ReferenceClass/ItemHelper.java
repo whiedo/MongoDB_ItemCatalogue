@@ -164,6 +164,21 @@ public class ItemHelper {
 		collection.deleteOne(Filters.eq("_id", item.getObjectId()));
 	}
 	
+    public static boolean itemAlreadyExists(Item item) {
+    	//query items which have not the same objectId and the same item number
+    	BasicDBObject searchQuery = new BasicDBObject();
+    	searchQuery.put("_id", new BasicDBObject("$ne", item.getObjectId()));
+    	searchQuery.put("number", item.getNumber());
+    	
+    	MongoCursor<Document> cursor = collection.find(searchQuery).iterator();
+    	if (cursor.hasNext()) {
+    		return true;
+    	}
+    	
+    	return false;
+    }
+    
+	
 	private static void getCollection() {
 		if (collection == null)
 			collection = DatabaseManager.database.getCollection(COLLECTION_NAME);

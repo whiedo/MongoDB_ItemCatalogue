@@ -7,6 +7,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 
+import application.model.ProductGroup;
 import application.model.Vendor;
 import application.mongoDBInterface.DatabaseManager;
 import javafx.collections.FXCollections;
@@ -73,6 +74,20 @@ public class VendorHelper {
 		
 		collection.deleteOne(Filters.eq("_id", vendor.getObjectId()));
 	}
+	
+    public static boolean vendorAlreadyExists(Vendor vendor) {
+    	//query items which have not the same objectId and the same item number
+    	BasicDBObject searchQuery = new BasicDBObject();
+    	searchQuery.put("_id", new BasicDBObject("$ne", vendor.getObjectId()));
+    	searchQuery.put("code", vendor.getCode());
+    	
+    	MongoCursor<Document> cursor = collection.find(searchQuery).iterator();
+    	if (cursor.hasNext()) {
+    		return true;
+    	}
+    	
+    	return false;
+    }
 	
 	private static void getCollection() {
 		if (collection == null)

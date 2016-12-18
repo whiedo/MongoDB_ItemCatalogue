@@ -3,6 +3,10 @@ package application.view;
 import java.io.IOException;
 import java.util.ListIterator;
 
+import org.bson.Document;
+
+import com.mongodb.client.MongoCursor;
+
 import application.MainApp;
 import application.model.Item;
 import application.model.Vendor;
@@ -177,9 +181,11 @@ public class ItemEditDialogController {
     private boolean isInputValid() {
         String errorMessage = "";
 
+        //check syntax
         if (numberField.getText() == null || numberField.getText().length() == 0) {
             errorMessage += "Keine gültige Nummer!\n"; 
         }
+        
         if (descrField.getText() == null || descrField.getText().length() == 0) {
             errorMessage += "Keine gültige Beschreibung!\n"; 
         }
@@ -187,18 +193,32 @@ public class ItemEditDialogController {
         if (salespriceField.getText() == null || salespriceField.getText().length() == 0) {
             errorMessage += "Kein gültiger Verkaufspreis!\n"; 
         } else {
-            // try to parse the salesprice into double
             try {
                 Double.parseDouble(salespriceField.getText());
             } catch (NumberFormatException e) {
                 errorMessage += "Kein gültiger Verkaufspreis (Muss Zahl sein)!\n"; 
             }
         }
-
+        
+        //check database (first build tmpItem which will be inserted)
+        String tmpProductGroup;
+        if (productGroupComboBox.getSelectionModel().getSelectedItem() == null)
+        	tmpProductGroup = "";
+        else
+        	tmpProductGroup = productGroupComboBox.getSelectionModel().getSelectedItem();
+        
+        Item tmpItem = new Item(
+        		item.getObjectId().toString(), numberField.getText(), descrField.getText(),
+        		Double.parseDouble(salespriceField.getText()), tmpProductGroup, tmpVendorItem.getVendors());
+        
+        if (ItemHelper.itemAlreadyExists(tmpItem)) {
+        	errorMessage += "Artikelnummer bereits vergeben!\n";
+        }
+        
+        //give return value
         if (errorMessage.length() == 0) {
             return true;
         } else {
-            // Show the error message.
             Alert alert = new Alert(AlertType.ERROR);
             alert.initOwner(dialogStage);
             alert.setTitle("Ungültige Felder");

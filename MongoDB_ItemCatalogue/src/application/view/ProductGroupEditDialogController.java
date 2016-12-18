@@ -1,6 +1,7 @@
 package application.view;
 
 import application.model.ProductGroup;
+import application.mongoDBInterface.ReferenceClass.ProductGroupHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -55,7 +56,8 @@ public class ProductGroupEditDialogController {
 
     private boolean isInputValid() {
         String errorMessage = "";
-
+        
+        //check syntax
         if (codeField.getText() == null || codeField.getText().length() == 0) {
             errorMessage += "Kein gültige Code!\n"; 
         }
@@ -67,10 +69,19 @@ public class ProductGroupEditDialogController {
             errorMessage += "Kein gültiges Material!\n"; 
         }
 
+        //check database (first build tmpProductGroup which will be inserted)
+        ProductGroup tmpProductGroup = new ProductGroup(
+        		productGroup.getObjectId().toString(), codeField.getText(),
+        		descrField.getText(), materialField.getText());
+        
+        if (ProductGroupHelper.productGroupAlreadyExists(tmpProductGroup)) {
+        	errorMessage += "Produktgruppencode bereits vergeben!\n";
+        }
+        
+        //give return value
         if (errorMessage.length() == 0) {
             return true;
         } else {
-            // Show the error message.
             Alert alert = new Alert(AlertType.ERROR);
             alert.initOwner(dialogStage);
             alert.setTitle("Ungültige Felder");
