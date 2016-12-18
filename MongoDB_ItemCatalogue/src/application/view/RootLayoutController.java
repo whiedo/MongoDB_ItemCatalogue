@@ -36,8 +36,8 @@ public class RootLayoutController {
     }
     
     @FXML
-    private void handleSalesStatistics() {
-    	mainApp.showSalesStatistics();
+    private void handleTopTenStatistics() {
+    	mainApp.showTopTenStatistics();
     }
 	
     public void setMainApp(MainApp mainApp) {

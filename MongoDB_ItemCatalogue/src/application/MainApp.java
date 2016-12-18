@@ -22,7 +22,7 @@ import application.view.ProductGroupEditDialogController;
 import application.view.ProductGroupItemStaticticsController;
 import application.view.ProductGroupOverviewController;
 import application.view.RootLayoutController;
-import application.view.SalesStatisticsController;
+import application.view.TopTenStatisticsController;
 import application.view.VendorEditDialogController;
 import application.view.VendorOverviewController;
 
@@ -267,11 +267,11 @@ public class MainApp extends Application {
 		}
 	}
 	
-	public void showSalesStatistics() {
+	public void showTopTenStatistics() {
         try {
             // Load item overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/SalesStatistics.fxml"));
+            loader.setLocation(MainApp.class.getResource("view/TopTenStatistics.fxml"));
             AnchorPane salesStatistics = (AnchorPane) loader.load();
             
             Stage dialogStage = new Stage();
@@ -281,7 +281,7 @@ public class MainApp extends Application {
             Scene scene = new Scene(salesStatistics);
             dialogStage.setScene(scene);
             
-            SalesStatisticsController controller = loader.getController();
+            TopTenStatisticsController controller = loader.getController();
             
             dialogStage.show();
         } catch (IOException e) {

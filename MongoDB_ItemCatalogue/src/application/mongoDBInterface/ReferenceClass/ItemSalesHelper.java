@@ -99,23 +99,16 @@ public class ItemSalesHelper {
 		ObservableList<ItemSales> itemSales = FXCollections.observableArrayList();
     	
 		Block<Document> addItemSaleBlock = new Block<Document>() {
-	        @Override
-	        public void apply(final Document doc) {
-	        	itemSales.add(new ItemSales(
-	        			null,
-	        			doc.get("_id").toString(),
-		        		//doc.get("itemNumber").toString(),
-		        		"",//doc.get("description").toString(),
-		        		0,//Double.parseDouble(doc.get("quantity").toString()),
+		    @Override
+		    public void apply(final Document doc) {
+		    	itemSales.add(new ItemSales(
+		    			null,
+		    			doc.get("_id").toString(),
+		        		"",
+		        		0,
 		        		Double.parseDouble(doc.get("amount").toString())));
-	        	System.out.println(doc.get("_id"));
-	        	System.out.println(doc.get("amount"));
-	        }
-	    };
-		
-	    //DBObject group1 = new BasicDBObject();
-	    //group1.put("_id",  new BasicDBObject("itemNumber", "$itemNumber"));
-	    //group1.put("amt", new BasicDBObject("$amount", 1));
+		    }
+		};
 	    
 		collection.aggregate(
 			      Arrays.asList(
@@ -127,7 +120,7 @@ public class ItemSalesHelper {
 					                    Projections.include("amount")
 					              )
 					          ),
-			              Aggregates.group("$itemNumber", Accumulators.sum("amount", 1)),
+			              Aggregates.group("$itemNumber", Accumulators.sum("amount", "$amount")),
 			              Aggregates.sort(new BasicDBObject("amount", -1)),
 			              Aggregates.limit(10)
 			      )

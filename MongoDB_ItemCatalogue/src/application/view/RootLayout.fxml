@@ -24,7 +24,7 @@
           <Menu mnemonicParsing="false" text="Auswertungen">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#handleProductGroupItemStatistics" text="Artikel nach Produktgruppe" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleSalesStatistics" text="Verkaufsstatistik" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleTopTenStatistics" text="Top 10 Liste" />
                </items></Menu>
         </menus>
       </MenuBar>
