@@ -11,6 +11,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 
 import application.model.Item;
+import application.model.ProductGroup;
 import application.model.Vendor;
 import application.mongoDBInterface.DatabaseManager;
 import javafx.collections.FXCollections;
@@ -92,7 +93,6 @@ public class ItemHelper {
 		        			vendor.get("name").toString(),
 		        			vendor.get("address").toString(),
 		        			vendor.get("contact").toString()));
-					
 				}
 		        
 		        items.add(new Item(
@@ -156,6 +156,66 @@ public class ItemHelper {
 		}
 		
 	    return i;
+	}
+	
+	public static void deleteVendorFromItems(Vendor v) {
+		getCollection();
+		
+		//loop through all items
+		MongoCursor<Document> cursor = collection.find().iterator();
+		try {
+		    while (cursor.hasNext()) {
+		    	boolean itemNeedsVendorUpdate = false;
+		        Document doc = cursor.next();
+		        
+		        ArrayList<Vendor> vendors = new ArrayList<Vendor>();
+
+		        @SuppressWarnings("unchecked")
+				List<Document> vendorList = (List<Document>) doc.get("vendors");
+			    
+		        //check vendors of item if update is neccessary
+		        for (Document vendor : vendorList) {
+		        	if (vendor.get("_id").toString().equals(v.getObjectId().toString())) {
+		        		itemNeedsVendorUpdate = true;
+		        	}
+				}
+		        
+		        //if update neccessary build new vendor list and update item
+		        if (itemNeedsVendorUpdate) {
+			        for (Document vendor : vendorList) {
+			        	if (!vendor.get("_id").toString().equals(v.getObjectId().toString())) {
+				        	vendors.add(new Vendor(
+				        			vendor.get("_id").toString(),
+				        			vendor.get("code").toString(),
+				        			vendor.get("name").toString(),
+				        			vendor.get("address").toString(),
+				        			vendor.get("contact").toString()));
+			        	}
+					}
+			        
+		        	updateItem(new Item(
+		        			doc.get("_id").toString(),
+			        		doc.get("number").toString(),
+			        		doc.get("description").toString(),
+			        		Double.parseDouble(doc.get("salesprice").toString()),
+			        		doc.get("productGroup").toString(),
+			        		vendors));
+		        }
+		    }
+		} finally {
+		    cursor.close();
+		}
+	}
+	
+	public static void deleteProductGroupFromItems(ProductGroup pg) {
+		getCollection();
+		
+		BasicDBObject searchQuery = new BasicDBObject().append("productGroup", pg.getCode());
+		
+		BasicDBObject newValueDoc = new BasicDBObject();
+		newValueDoc.append("$set", new BasicDBObject().append("productGroup", ""));
+
+		collection.updateMany(searchQuery, newValueDoc);
 	}
 	
 	public static void deleteItem(Item item) {

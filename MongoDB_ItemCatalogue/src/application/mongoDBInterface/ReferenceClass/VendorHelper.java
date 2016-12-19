@@ -72,6 +72,8 @@ public class VendorHelper {
 	public static void deleteVendor(Vendor vendor) {
 		getCollection();
 		
+		ItemHelper.deleteVendorFromItems(vendor);
+		
 		collection.deleteOne(Filters.eq("_id", vendor.getObjectId()));
 	}
 	

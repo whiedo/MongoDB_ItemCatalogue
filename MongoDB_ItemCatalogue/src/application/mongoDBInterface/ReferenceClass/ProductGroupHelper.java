@@ -85,6 +85,8 @@ public class ProductGroupHelper {
 	
 	public static void deleteProductGroup(ProductGroup productGroup) {
 		getCollection();
+			
+		ItemHelper.deleteProductGroupFromItems(productGroup);
 		
 		collection.deleteOne(Filters.eq("_id", productGroup.getObjectId()));
 	}
