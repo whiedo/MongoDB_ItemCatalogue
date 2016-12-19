@@ -1,6 +1,7 @@
 package application.view;
 
 import application.MainApp;
+import application.model.Item;
 import application.model.ItemSales;
 import application.mongoDBInterface.ReferenceClass.ItemHelper;
 import application.mongoDBInterface.ReferenceClass.ItemSalesHelper;
@@ -37,8 +38,26 @@ public class ItemSalesController {
     	itemNumberColumn.setOnEditCommit(
                 new EventHandler<TableColumn.CellEditEvent<ItemSales, String>>() {
                     @Override public void handle(TableColumn.CellEditEvent<ItemSales, String> t) {
-                        ((ItemSales) t.getTableView().getItems().get(
-                                t.getTablePosition().getRow())).setItemNumber(t.getNewValue());
+                    	ItemSales is = ((ItemSales) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow()));
+                    	String oldValue = is.getItemNumber();
+                    	is.setItemNumber(t.getNewValue());
+                    	
+                        Item tmpItem = new Item();
+                        tmpItem.setNumber(is.getItemNumber());
+                        if (!ItemHelper.itemAlreadyExists(tmpItem)) {
+                	        //Item not found
+                	        Alert alert = new Alert(AlertType.ERROR);
+                	        alert.initOwner(mainApp.getPrimaryStage());
+                	        alert.setTitle("Artikel nicht vorhanden");
+                	        alert.setHeaderText("Ungültige Artikelnummer!");
+                	        alert.setContentText("Bitte gültigen Artikel auswählen.");
+                	        alert.showAndWait();
+                	        
+                	        //reset item number
+                	        is.setItemNumber(oldValue);
+                	        t.getTableView().getItems().set(t.getTablePosition().getRow(), is);
+                        }
                     }
                 });
         
@@ -54,6 +73,17 @@ public class ItemSalesController {
     	
     	quantityColumn.setCellValueFactory(cellData -> cellData.getValue().getQuantityProperty().asObject());
     	quantityColumn.setCellFactory(col -> new DoubleEditingCell());
+    	quantityColumn.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<ItemSales, Double>>() {
+                    @Override public void handle(TableColumn.CellEditEvent<ItemSales, Double> t) {
+                        ItemSales is = (ItemSales) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow());
+                        is.setQuantity(t.getNewValue());
+                        
+                        Double calculatedAmount = is.getQuantity() * is.getPrice();
+                        is.setAmount(calculatedAmount);
+                    }
+                });
     	
     	amountColumn.setCellValueFactory(cellData -> cellData.getValue().getAmountProperty().asObject());
     	amountColumn.setCellFactory(col -> new DoubleEditingCell());

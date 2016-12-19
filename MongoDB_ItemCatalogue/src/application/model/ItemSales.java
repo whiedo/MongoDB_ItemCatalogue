@@ -2,6 +2,7 @@ package application.model;
 
 import org.bson.types.ObjectId;
 
+import application.mongoDBInterface.ReferenceClass.ItemHelper;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -27,6 +28,10 @@ public class ItemSales {
     	this.description = new SimpleStringProperty(description);
     	this.quantity = new SimpleDoubleProperty(quantity);
     	this.amount = new SimpleDoubleProperty(amount);
+	}
+	
+	public Double getPrice() {
+		return ItemHelper.getPrice(getItemNumber());
 	}
 	
     public ObjectId getObjectId() {

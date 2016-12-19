@@ -238,6 +238,15 @@ public class ItemHelper {
     	return false;
     }
     
+    public static Double getPrice(String itemNumber) {
+    	getCollection();
+    	
+    	Document itemDoc = collection.find(Filters.eq("number", itemNumber)).first();
+    	Double price = Double.parseDouble(itemDoc.get("salesprice").toString());
+    	
+    	return price;
+    }
+    
 	
 	private static void getCollection() {
 		if (collection == null)
