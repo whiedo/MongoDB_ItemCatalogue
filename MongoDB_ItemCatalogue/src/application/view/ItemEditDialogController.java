@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Locale;
 
@@ -13,8 +14,6 @@ import application.model.Vendor;
 import application.mongoDBInterface.ReferenceClass.ItemHelper;
 import application.mongoDBInterface.ReferenceClass.ProductGroupHelper;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -138,12 +137,21 @@ public class ItemEditDialogController {
 	        // Show the dialog and wait until the user closes it
 	        dialogStage.showAndWait();
 
-	        //Add vendor to all vendors buffer
-	        tmpVendorItem.addVendor(controller.getVendor());
-	        
-	        //Add vendor to table
-        	vendorSubData.add(controller.getVendor());
-	        vendorSubTable.setItems(vendorSubData);
+	        if (itemContainsVendor(controller.getVendor(),tmpVendorItem)) {
+	        	//vendor already selected
+	            Alert alert = new Alert(AlertType.WARNING);
+	            alert.setTitle("Lieferant bereits vorhanden");
+	            alert.setHeaderText("Lieferant bereits vorhanden!");
+	            alert.showAndWait();
+	            
+	        } else {
+	        	//Add vendor to all vendors buffer
+	        	tmpVendorItem.addVendor(controller.getVendor());
+	        	
+	        	//Add vendor to table
+	        	vendorSubData.add(controller.getVendor());
+		        vendorSubTable.setItems(vendorSubData);
+	        }
 	        
 	    } catch (IOException e) {
 	        e.printStackTrace();
@@ -178,6 +186,15 @@ public class ItemEditDialogController {
 
             alert.showAndWait();
         }
+    }
+    
+    private boolean itemContainsVendor(Vendor v, Item tmpVendorItem) {
+    	for (Vendor vendor : tmpVendorItem.getVendors()) {
+    		if (vendor.getCode().equals(v.getCode())) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
 
     private boolean isInputValid() {

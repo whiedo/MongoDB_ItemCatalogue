@@ -4,7 +4,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
-import java.util.regex.Pattern;
 
 import application.model.ItemSales;
 import javafx.scene.control.TableCell;

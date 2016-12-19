@@ -5,28 +5,37 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.RootLayoutController">
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="Stammdaten">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#handleCoreDataItem" text="Artikel" />
-              <MenuItem mnemonicParsing="false" onAction="#handleCoreDataProductGroup" text="Produktgruppe" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleCoreDataVendor" text="Lieferant" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="Verkauf">
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleItemSales" text="Artikelverkäufe" />
-              </items>
-            </Menu>
-          <Menu mnemonicParsing="false" text="Auswertungen">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleProductGroupItemStatistics" text="Artikel nach Produktgruppe" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleTopTenStatistics" text="Top 10 Liste" />
-               </items></Menu>
-        </menus>
-      </MenuBar>
-   </top>
+<BorderPane prefHeight="800.0" prefWidth="1200.0"
+	xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="application.view.RootLayoutController">
+	<top>
+		<MenuBar BorderPane.alignment="CENTER">
+			<menus>
+				<Menu mnemonicParsing="false" text="Stammdaten">
+					<items>
+						<MenuItem mnemonicParsing="false" onAction="#handleCoreDataItem"
+							text="Artikel" />
+						<MenuItem mnemonicParsing="false" onAction="#handleCoreDataProductGroup"
+							text="Produktgruppe" />
+						<MenuItem mnemonicParsing="false" onAction="#handleCoreDataVendor"
+							text="Lieferant" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Verkauf">
+					<items>
+						<MenuItem mnemonicParsing="false" onAction="#handleItemSales"
+							text="Artikelverkäufe" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="Auswertungen">
+					<items>
+						<MenuItem mnemonicParsing="false"
+							onAction="#handleProductGroupItemStatistics" text="Artikel nach Produktgruppe" />
+						<MenuItem mnemonicParsing="false" onAction="#handleTopTenStatistics"
+							text="Top 10 Liste" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+	</top>
 </BorderPane>

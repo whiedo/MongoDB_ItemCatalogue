@@ -1,6 +1,5 @@
 package application.view;
 
-import application.MainApp;
 import application.mongoDBInterface.ReferenceClass.ItemHelper;
 import application.mongoDBInterface.ReferenceClass.ProductGroupHelper;
 import javafx.collections.ObservableList;
@@ -13,7 +12,6 @@ public class ProductGroupItemStaticticsController {
 	@FXML private BarChart<String, Integer> barChart;
 	@FXML private CategoryAxis xAxis;
 	
-    private MainApp mainApp;
 	private ObservableList<String> productGroupNames;
 		
 	@FXML
@@ -40,8 +38,4 @@ public class ProductGroupItemStaticticsController {
 
         barChart.getData().add(series);
 	}
-	
-    public void setMainApp(MainApp mainApp) {
-        this.mainApp = mainApp;
-    }
 }

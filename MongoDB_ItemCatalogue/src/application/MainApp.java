@@ -4,19 +4,10 @@ import java.io.IOException;
 
 import com.aquafx_project.AquaFx;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import application.model.*;
-import application.mongoDBInterface.ReferenceClass.ItemHelper;
+import application.model.Item;
+import application.model.ProductGroup;
+import application.model.Vendor;
 import application.mongoDBInterface.ReferenceClass.ItemSalesHelper;
-import application.mongoDBInterface.ReferenceClass.VendorHelper;
 import application.view.ItemEditDialogController;
 import application.view.ItemOverviewController;
 import application.view.ItemSalesController;
@@ -24,9 +15,17 @@ import application.view.ProductGroupEditDialogController;
 import application.view.ProductGroupItemStaticticsController;
 import application.view.ProductGroupOverviewController;
 import application.view.RootLayoutController;
-import application.view.TopTenStatisticsController;
 import application.view.VendorEditDialogController;
 import application.view.VendorOverviewController;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class MainApp extends Application {
 	
@@ -261,7 +260,6 @@ public class MainApp extends Application {
             dialogStage.setScene(scene);
             
             ProductGroupItemStaticticsController controller = loader.getController();
-            controller.setMainApp(this);
             
             dialogStage.show();
         } catch (IOException e) {
@@ -282,8 +280,6 @@ public class MainApp extends Application {
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(salesStatistics);
             dialogStage.setScene(scene);
-            
-            TopTenStatisticsController controller = loader.getController();
             
             dialogStage.show();
         } catch (IOException e) {

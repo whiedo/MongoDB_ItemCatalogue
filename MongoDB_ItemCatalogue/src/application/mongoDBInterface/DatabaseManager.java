@@ -5,6 +5,7 @@ import com.mongodb.MongoCommandException;
 import com.mongodb.client.MongoDatabase;
 
 import application.mongoDBInterface.ReferenceClass.ItemHelper;
+import application.mongoDBInterface.ReferenceClass.ItemSalesHelper;
 import application.mongoDBInterface.ReferenceClass.ProductGroupHelper;
 import application.mongoDBInterface.ReferenceClass.VendorHelper;
 
@@ -21,6 +22,7 @@ public class DatabaseManager {
 			
 			try {
 				database.createCollection(ItemHelper.COLLECTION_NAME);
+				database.createCollection(ItemSalesHelper.COLLECTION_NAME);
 				database.createCollection(ProductGroupHelper.COLLECTION_NAME);
 				database.createCollection(VendorHelper.COLLECTION_NAME);
 			} catch (MongoCommandException e){

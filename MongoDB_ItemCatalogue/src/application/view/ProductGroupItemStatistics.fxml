@@ -6,16 +6,22 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.ProductGroupItemStaticticsController">
-   <children>
-      <BarChart fx:id="barChart" legendVisible="false" prefHeight="800.0" prefWidth="1000.0" title="Artikel nach Produktgruppe" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <xAxis>
-          <CategoryAxis side="BOTTOM" fx:id="xAxis" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis side="LEFT" />
-        </yAxis>
-      </BarChart>
-      <AmbientLight color="CHARTREUSE" layoutX="124.0" layoutY="90.0" lightOn="true" />
-   </children>
+<AnchorPane prefHeight="800.0" prefWidth="1000.0"
+	xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="application.view.ProductGroupItemStaticticsController">
+	<children>
+		<BarChart fx:id="barChart" legendVisible="false" prefHeight="800.0"
+			prefWidth="1000.0" title="Artikel nach Produktgruppe"
+			AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<xAxis>
+				<CategoryAxis side="BOTTOM" fx:id="xAxis" />
+			</xAxis>
+			<yAxis>
+				<NumberAxis side="LEFT" />
+			</yAxis>
+		</BarChart>
+		<AmbientLight color="CHARTREUSE" layoutX="124.0" layoutY="90.0"
+			lightOn="true" />
+	</children>
 </AnchorPane>

@@ -7,7 +7,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 
-import application.model.Item;
 import application.model.ProductGroup;
 import application.mongoDBInterface.DatabaseManager;
 import javafx.collections.FXCollections;

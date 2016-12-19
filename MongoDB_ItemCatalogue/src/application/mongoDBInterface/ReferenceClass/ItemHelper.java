@@ -246,7 +246,6 @@ public class ItemHelper {
     	
     	return price;
     }
-    
 	
 	private static void getCollection() {
 		if (collection == null)
