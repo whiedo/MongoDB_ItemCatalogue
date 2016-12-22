@@ -81,7 +81,9 @@ public class ItemEditDialogController {
         vendorSubData = ItemHelper.getVendorsOfItem(item);
         vendorSubTable.setItems(vendorSubData);
         
-        tmpVendorItem.setVendors(item.getVendors());
+        ArrayList<Vendor> vendorList = new ArrayList<Vendor>();
+        vendorList.addAll(item.getVendors()); 
+        tmpVendorItem.setVendors(vendorList);
     }
 
     public boolean isOkClicked() {
