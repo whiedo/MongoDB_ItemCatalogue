@@ -57,7 +57,7 @@
 				<Insets />
 			</opaqueInsets>
 		</TableView>
-		<ButtonBar layoutX="180.0" layoutY="128.0" prefHeight="40.0" prefWidth="350.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="135.0">
+		<ButtonBar layoutX="180.0" layoutY="128.0" prefHeight="40.0" prefWidth="350.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="140.0">
 			<buttons>
 				<Button mnemonicParsing="false" onAction="#handleDeleteVendor" text="Lieferant löschen" />
 				<Button mnemonicParsing="false" onAction="#handleAddVendor" text="Lieferant hinzufügen" />
